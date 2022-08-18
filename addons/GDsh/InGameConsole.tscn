@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://o6rnnciwmwvn"]
+
+[ext_resource type="Script" path="res://addons/GDsh/InGameConsole.gd" id="1_ypsq7"]
+[ext_resource type="FontFile" uid="uid://b55prglyvfn00" path="res://addons/GDsh/assets/fonts/JetBrainsMono-Regular.ttf" id="2_4hm2m"]
+[ext_resource type="FontFile" uid="uid://lkglpmfmn7h1" path="res://addons/GDsh/assets/fonts/JetBrainsMono-SemiBold.ttf" id="3_cputk"]
+
+[sub_resource type="Gradient" id="Gradient_hy6aq"]
+colors = PackedColorArray(0, 0, 0, 0.439216, 0, 0, 0, 0.776471)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gefn6"]
+gradient = SubResource("Gradient_hy6aq")
+fill_from = Vector2(0.162393, 0)
+fill_to = Vector2(0.876068, 0.777778)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6vouv"]
+
+[node name="InGameConsole" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_ypsq7")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource("GradientTexture2D_gefn6")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Log" type="RichTextLabel" parent="VBox"]
+offset_right = 1024.0
+offset_bottom = 565.0
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_4hm2m")
+theme_override_fonts/bold_font = ExtResource("3_cputk")
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+offset_top = 569.0
+offset_right = 1024.0
+offset_bottom = 600.0
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="VBox/HBox"]
+offset_top = 3.0
+offset_right = 20.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("2_4hm2m")
+text = "> "
+
+[node name="Prompt" type="CodeEdit" parent="VBox/HBox"]
+offset_left = 20.0
+offset_right = 961.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_4hm2m")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6vouv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6vouv")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_6vouv")
+theme_override_styles/completion = SubResource("StyleBoxEmpty_6vouv")
+placeholder_text = "Type command"
+draw_control_chars = true
+scroll_fit_content_height = true
+caret_blink = true
+
+[node name="Submit" type="Button" parent="VBox/HBox"]
+offset_left = 961.0
+offset_right = 1024.0
+offset_bottom = 31.0
+text = "Submit"
+
+[connection signal="meta_clicked" from="VBox/Log" to="." method="_on_log_meta_clicked"]
+[connection signal="gui_input" from="VBox/HBox/Prompt" to="." method="_on_prompt_gui_input"]
+[connection signal="pressed" from="VBox/HBox/Submit" to="." method="_on_submit_pressed"]
