@@ -1,2 +1,4 @@
-# console-godot-plugin
-Plugin for adding in-game console to Godot Engine 4 projects
+# GDsh
+GDsh is simple console shell for adding to your game. It allows you easily create new commands and have *nice* interface.
+
+![image](https://user-images.githubusercontent.com/51191280/185478791-f5a5153d-7cbb-41fe-a7ee-ef8080f7ea31.png)
