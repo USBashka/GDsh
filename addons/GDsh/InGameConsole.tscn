@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://o6rnnciwmwvn"]
+[gd_scene load_steps=9 format=3 uid="uid://o6rnnciwmwvn"]
 
 [ext_resource type="Script" path="res://addons/GDsh/InGameConsole.gd" id="1_ypsq7"]
 [ext_resource type="FontFile" uid="uid://b55prglyvfn00" path="res://addons/GDsh/assets/fonts/JetBrainsMono-Regular.ttf" id="2_4hm2m"]
@@ -14,49 +14,109 @@ fill_to = Vector2(0.876068, 0.777778)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6vouv"]
 
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_qh1b1"]
+number_color = Color(0.396078, 0.67451, 0.654902, 1)
+symbol_color = Color(0.462745, 0.588235, 0.741176, 1)
+function_color = Color(1, 1, 1, 1)
+member_variable_color = Color(0.737255, 0.737255, 0.737255, 1)
+keyword_colors = {
+"^.* ": Color(0.886275, 0.886275, 0, 1),
+"help": Color(1, 1, 0, 1)
+}
+color_regions = {
+"\" \"": Color(0.564706, 0.611765, 0.360784, 1)
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0aoa"]
+content_margin_left = 13.0
+bg_color = Color(0.14902, 0.145098, 0.12549, 0.858824)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_bottom_right = 4
+corner_detail = 1
+shadow_size = 10
+
 [node name="InGameConsole" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_ypsq7")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = SubResource("GradientTexture2D_gefn6")
+stretch_mode = 6
 
 [node name="VBox" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true
 
 [node name="Log" type="RichTextLabel" parent="VBox"]
-offset_right = 1024.0
+offset_right = 1008.0
 offset_bottom = 565.0
 size_flags_vertical = 3
 focus_mode = 2
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/selection_color = Color(0.6, 0.6, 0.6, 1)
 theme_override_fonts/normal_font = ExtResource("2_4hm2m")
 theme_override_fonts/bold_font = ExtResource("3_cputk")
 bbcode_enabled = true
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"
 scroll_following = true
 selection_enabled = true
 
 [node name="HBox" type="HBoxContainer" parent="VBox"]
 offset_top = 569.0
-offset_right = 1024.0
+offset_right = 1008.0
 offset_bottom = 600.0
 theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="VBox/HBox"]
-offset_top = 3.0
 offset_right = 20.0
-offset_bottom = 28.0
+offset_bottom = 31.0
+size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("2_4hm2m")
 text = "> "
+vertical_alignment = 1
 
 [node name="Prompt" type="CodeEdit" parent="VBox/HBox"]
 offset_left = 20.0
-offset_right = 961.0
+offset_right = 880.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_4hm2m")
@@ -65,16 +125,33 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_6vouv")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_6vouv")
 theme_override_styles/completion = SubResource("StyleBoxEmpty_6vouv")
 placeholder_text = "Type command"
+wrap_mode = 1
 draw_control_chars = true
+syntax_highlighter = SubResource("CodeHighlighter_qh1b1")
 scroll_fit_content_height = true
 caret_blink = true
 
 [node name="Submit" type="Button" parent="VBox/HBox"]
-offset_left = 961.0
-offset_right = 1024.0
+custom_minimum_size = Vector2(128, 0)
+offset_left = 880.0
+offset_right = 1008.0
 offset_bottom = 31.0
+focus_mode = 0
 text = "Submit"
 
+[node name="Tooltip" type="Label" parent="."]
+visible = false
+offset_right = 55.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_w0aoa")
+text = "Tooltip"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="focus_entered" from="VBox/Log" to="." method="_on_log_focus_entered"]
 [connection signal="meta_clicked" from="VBox/Log" to="." method="_on_log_meta_clicked"]
+[connection signal="meta_hover_ended" from="VBox/Log" to="." method="_on_log_meta_hover_ended"]
+[connection signal="meta_hover_started" from="VBox/Log" to="." method="_on_log_meta_hover_started"]
 [connection signal="gui_input" from="VBox/HBox/Prompt" to="." method="_on_prompt_gui_input"]
 [connection signal="pressed" from="VBox/HBox/Submit" to="." method="_on_submit_pressed"]
