@@ -120,15 +120,13 @@ func echo(args: Array):
 ## Built-in command
 func cat(args: Array):
 	var r = ""
-	var file = File.new()
 	for i in args:
-		if file.file_exists(i):
+		if FileAccess.file_exists(i):
 			if i.ends_with(".png") or i.ends_with(".jpeg"):
 				r += "[img]" + i + "[/img]\n"
 			else:
-				file.open(i, File.READ)
+				var file = FileAccess.open(i, FileAccess.READ)
 				r += file.get_as_text() + "\n"
-				file.close()
 		else:
 			r += "No such file \"%s\"\n"%i
 	return r
